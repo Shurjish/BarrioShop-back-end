@@ -17,12 +17,13 @@ const getStoreId = async (req, res) => {
         console.log(req.params);
         let { id } = req.params;
         console.log(id);
-        const storeId = await Store.findById(id).populate('product');
+        const storeId = await Store.findById(id).populate('products');
         if (!storeId) {
             return res.status(404).json({ mensaje: 'id no encontrada' });
         }
-        return res.status(200).json(storeIdId);
+        return res.status(200).json(storeId);
     } catch (error) {
+        console.log(error);
         return res.status(500).json(error);
     }
 };

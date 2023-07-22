@@ -7,12 +7,13 @@ const {
 } = require('../../utils/validators');
 
 const { generateSign } = require('../../utils/jwt');
+const nodeMailer = require('nodemailer');
 
 const login = async (req, res) => {
     try {
         const userInfo = await User.findOne({ email: req.body.email });
         if (!userInfo) {
-            return res.status(200).json({ message: 'El email es invalido' });
+            return res.status(400).json({ message: 'El email es invalido' });
         }
         if (!bcrypt.compareSync(req.body.password, userInfo.password)) {
             return res
@@ -60,5 +61,32 @@ const checkSession = async (req, res) => {
         return res.status(500).json(error);
     }
 };
+const appPost = async (req, res) => {
+    let transporter = nodeMailer.createTransport({
+        service: 'yahoo',
+        auth: {
+            user: 'finalProyectUp@yahoo.com',
+            pass: 'UpgradeHub',
+        },
+    });
+    let userMail = req.query.email;
 
-module.exports = { login, register, checkSession };
+    let mailOptions = {
+        from: 'finalProyectUp@yahoo.com',
+        to: userMail,
+        subject: 'Recuperacion de contraseña',
+        text: 'Para recuperar la contraseña',
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+            res.send('Error al enviar el mail');
+        } else {
+            console.log('Correo enviado: ' + info.response);
+            res.send('Mail enviado correctamente');
+        }
+    });
+};
+
+module.exports = { login, register, checkSession, appPost };
