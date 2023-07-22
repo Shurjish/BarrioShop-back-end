@@ -30,6 +30,8 @@ const login = async (req, res) => {
 };
 const register = async (req, res) => {
     try {
+        console.log(req.body);
+
         const newUser = new User(req.body);
 
         if (!validatePassword(newUser.password)) {
