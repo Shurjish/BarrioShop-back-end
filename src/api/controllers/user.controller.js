@@ -102,9 +102,9 @@ const deleteUser = async (req, res) => {
     try {
         console.log(req.params);
         const { id } = req.params;
-        const deleteUser = await Store.findByIdAndDelete(id);
+        const deleteUser = await User.findByIdAndDelete(id);
         if (!deleteUser) {
-            return res.status(404).json({ mensaje: 'Comercio no encontrado' });
+            return res.status(404).json({ mensaje: 'User no encontrado' });
         }
         return res.status(200).json(deleteUser);
     } catch (error) {
@@ -117,7 +117,7 @@ const modUser = async (req, res) => {
         const { id } = req.params;
         const putUser = new User(req.body);
         putUser._id = id;
-        const updateUser = await Store.findByIdAndUpdate(id, putUser, {
+        const updateUser = await User.findByIdAndUpdate(id, putUser, {
             new: true,
         });
         return res.status(200).json(updateUser);

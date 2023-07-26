@@ -23,7 +23,7 @@ router.get('/post', appPost);
 router.get('/users', getUsers);
 router.get('/idEmail', getIdAndEmails);
 router.get('/:userId', getUserById);
-router.del('/delete', deleteUser);
-router.put('/modify', modUser);
+router.delete('/:id', deleteUser);
+router.put('/:id', modUser);
 
 module.exports = router;
