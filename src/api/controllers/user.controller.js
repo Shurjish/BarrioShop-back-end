@@ -91,21 +91,49 @@ const appPost = async (req, res) => {
 
 const getUsers = async (req, res) => {
     try {
-      const allUsers = await User.find();
-      return res.status(200).json(allUsers);
+        const allUsers = await User.find();
+        return res.status(200).json(allUsers);
     } catch (error) {
-      return res.status(500).json(error);
+        return res.status(500).json(error);
     }
-  };
+};
 
-  const getIdAndEmails = async (req, res) => {
+const deleteUser = async (req, res) => {
     try {
-      const users = await User.find({}, '_id email'); // Obtener solo _id y email
-      return res.status(200).json(users);
+        console.log(req.params);
+        const { id } = req.params;
+        const deleteUser = await Store.findByIdAndDelete(id);
+        if (!deleteUser) {
+            return res.status(404).json({ mensaje: 'Comercio no encontrado' });
+        }
+        return res.status(200).json(deleteUser);
     } catch (error) {
-      return res.status(500).json(error);
+        return res.status(500).json(error);
     }
-  };
+};
+
+const modUser = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const putUser = new User(req.body);
+        putUser._id = id;
+        const updateUser = await Store.findByIdAndUpdate(id, putUser, {
+            new: true,
+        });
+        return res.status(200).json(updateUser);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
+
+const getIdAndEmails = async (req, res) => {
+    try {
+        const users = await User.find({}, '_id email'); // Obtener solo _id y email
+        return res.status(200).json(users);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
 
 const getUserById = async (req, res) => {
     try {
@@ -120,4 +148,14 @@ const getUserById = async (req, res) => {
     }
 };
 
-module.exports = { login, register, checkSession, appPost, getUsers, getIdAndEmails, getUserById };
+module.exports = {
+    login,
+    register,
+    checkSession,
+    appPost,
+    getUsers,
+    getIdAndEmails,
+    getUserById,
+    deleteUser,
+    modUser,
+};

@@ -8,6 +8,8 @@ const {
     getUsers,
     getIdAndEmails,
     getUserById,
+    deleteUser,
+    modUser,
 } = require('../controllers/user.controller');
 
 const { isAuth } = require('../../middlewares/auth');
@@ -21,5 +23,7 @@ router.get('/post', appPost);
 router.get('/users', getUsers);
 router.get('/idEmail', getIdAndEmails);
 router.get('/:userId', getUserById);
+router.del('/delete', deleteUser);
+router.put('/modify', modUser);
 
 module.exports = router;
