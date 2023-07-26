@@ -98,6 +98,14 @@ const getUsers = async (req, res) => {
     }
   };
 
+  const getIdAndEmails = async (req, res) => {
+    try {
+      const users = await User.find({}, '_id email'); // Obtener solo _id y email
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  };
 
 const getUserById = async (req, res) => {
     try {
@@ -112,4 +120,4 @@ const getUserById = async (req, res) => {
     }
 };
 
-module.exports = { login, register, checkSession, appPost, getUsers, getUserById };
+module.exports = { login, register, checkSession, appPost, getUsers, getIdAndEmails, getUserById };

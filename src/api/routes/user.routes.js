@@ -6,6 +6,7 @@ const {
     checkSession,
     appPost,
     getUsers,
+    getIdAndEmails,
     getUserById,
 } = require('../controllers/user.controller');
 
@@ -18,6 +19,7 @@ router.post('/register', register);
 router.post('/checkSession', [isAuth], checkSession);
 router.get('/post', appPost);
 router.get('/users', getUsers);
+router.get('/idEmail', getIdAndEmails);
 router.get('/:userId', getUserById);
 
 module.exports = router;
