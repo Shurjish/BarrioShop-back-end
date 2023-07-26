@@ -89,4 +89,17 @@ const appPost = async (req, res) => {
     });
 };
 
-module.exports = { login, register, checkSession, appPost };
+const getUserById = async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const userProfile = await User.findById(userId);
+        if (!userProfile) {
+            return res.status(404).json({ message: 'Usuario no encontrado' });
+        }
+        return res.status(200).json(userProfile);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
+
+module.exports = { login, register, checkSession, appPost, getUserById };
