@@ -18,6 +18,6 @@ router.post('/register', register);
 router.post('/checkSession', [isAuth], checkSession);
 router.get('/post', appPost);
 router.get('/users', getUsers);
-router.get('/user/:userId', getUserById);
+router.get('/:userId', getUserById);
 
 module.exports = router;
